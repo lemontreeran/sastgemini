@@ -1,5 +1,6 @@
 {
-"dependencies": {
+  "dependencies": {
+    "@google/generative-ai": "^0.21.0",
     "@types/mongoose": "^5.11.96",
     "dotenv": "^16.4.5"
   },
@@ -18,12 +19,23 @@
   "contributes": {
     "commands": [
       {
-        "command": "sastgemini.fileScan",
-        "title": "Scan File"
+        "command": "sastgemini.scanFile",
+        "title": "SAST Scan File"
       },
       {
-        "command": "sastgemini.fileWorkspace",
-        "title": "Scan Workspace"
+        "command": "sastgemini.setApiToken",
+        "title": "Set Api Token",
+        "category": "API"
+      },
+      {
+        "command": "sastgemini.getApiToken",
+        "title": "Show API",
+        "category": "API"
+      },
+      {
+        "command": "sastgemini.resetApiToken",
+        "title": "Reset Api Token",
+        "category": "API"
       }
     ],
     "configuration": {
@@ -39,12 +51,19 @@
     }
   },
   "scripts": {
+    "npm_install": "npm install",
+    "npm_reinstall": "rm -rf node_modules && npm run npm_install",
     "vscode:prepublish": "npm run compile",
     "compile": "tsc -p ./",
     "watch": "tsc -watch -p ./",
+    "fix-lint": "eslint --fix src/**/*.ts",
     "pretest": "npm run compile && npm run lint",
     "lint": "eslint src",
-    "test": "vscode-test"
+    "test": "vscode-test",
+    "coverage": "node ./out/test/runTest.js --coverage",
+    "vscode:prepublish": "npm run compile",
+    "package": "vsce package -o sastgemini.vsix",
+    "installExtension": "code --install-extension sastgemini.vsix --force"
   },
   "devDependencies": {
     "@types/vscode": "^1.96.0",

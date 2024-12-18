@@ -1,7 +1,8 @@
 export const SAST_PROMPT = (
-  cmd: string,
-  Act: string,
-  Prompt: string
+    cmd: string,
+    Act: string,
+    Prompt: string,
+    Code: string
 ) =>
   `
     cmd:
@@ -13,11 +14,16 @@ export const SAST_PROMPT = (
     Prompt:
     ${Prompt}
 
+    Code with Prepend line numbers for analyse:
+    ${Code}
+
     Format of Response:
-    {
-        line: <line>,
-        suggestion: <suggestion>
-    }
+    [
+        {
+            line: <line number>,
+            suggestion: <suggestion>
+        }
+    ]
 
     You must return the response in JSON format like the example above.
 `;
