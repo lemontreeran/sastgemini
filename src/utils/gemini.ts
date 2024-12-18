@@ -1,16 +1,16 @@
 import { GoogleGenerativeAI } from "@google/generative-ai";
 // import * as dotenv from "dotenv";
+import * as vscode from 'vscode';
 import {
     SAST_PROMPT,
 } from "../prompt";
-const vscode = require('vscode');
 const prompt = require('./prompt.json');
 
-export async function doSASTScan(text) => {
+export async function doSASTScan(context: vscode.ExtensionContext, text: string) {
     // const config = vscode.workspace.getConfiguration('sastgemini');
     // const geminiKey = config.get('apiKey');
     const geminiKey = context.globalState.get('apiToken');
-    console.error(geminKey);
+    console.error(geminiKey);
 
     // Prepend line numbers to the input text
     const numberedText = text.split('\n').map((line, index) => `${index + 1}: ${line}`).join('\n');
@@ -23,7 +23,7 @@ export async function doSASTScan(text) => {
         numberedText
     );
 
-    const result = await model.generateContent(finalPrompt);
+    const result = await model.generateContent(finalSASTPrompt);
 
     const parsedResponse = JSON.parse(result.response.text());
 

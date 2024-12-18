@@ -4,7 +4,7 @@ import { join } from 'path';
 const diagnosticCollection = vscode.languages.createDiagnosticCollection('sastgemini');
 import { doSASTScan } from './gemini';
 
-export async function scanSASTFile() {
+export async function scanSASTFile(context: vscode.ExtensionContext) {
     try {
         const editor = vscode.window.activeTextEditor;
         if (!editor) {
@@ -21,27 +21,27 @@ export async function scanSASTFile() {
             },
             async () => {
                 try {
-                    await scanAndApplyDiagnostics(editor.document.uri.fsPath, text);
+                    await scanAndApplyDiagnostics(context, editor.document.uri.fsPath, text);
                 }
-                catch (error) {
+                catch (error: any) {
                     console.error(error);
                     vscode.window.showErrorMessage(`Error: ${error.message}`);
                 }
             }
         );
-    } catch(error) {
+    } catch(error: any) {
         console.error(error);
 
     }
 }
 
-export async function scanAndApplyDiagnostics(filePath, text) {
+export async function scanAndApplyDiagnostics(context: vscode.ExtensionContext, filePath: string, text: string) {
     try {
-        const result = await doSASTScan(text);
+        const result = await doSASTScan(context, text);
         // Parse the result and create diagnostics
         const diagnostics = [];
         const scanResults = JSON.parse(text);
-        if (Array.isArray(suggestions)) {
+        if (Array.isArray(scanResults)) {
             for (const scanResult of scanResults) {
                 const lineNumber = scanResult.line - 1; // convert to 0-based index
 
@@ -52,16 +52,17 @@ export async function scanAndApplyDiagnostics(filePath, text) {
 
                 const diagnostic = new vscode.Diagnostic(
                     range,
-                    message,
+                    scanResult.suggestion,
                     vscode.DiagnosticSeverity.Warning
                 );
                 diagnostics.push(diagnostic);
-        }
+            }
 
-        // Show the diagnostics in the editor
-        const fileUri = vscode.Uri.file(filePath);
-        diagnosticCollection.set(fileUri, diagnostics);
-    } catch (error) {
+            // Show the diagnostics in the editor
+            const fileUri = vscode.Uri.file(filePath);
+            diagnosticCollection.set(fileUri, diagnostics);
+        }
+    } catch (error: any) {
         console.error(`Error analyzing ${filePath}: ${error.message}`);
     }
 }
