@@ -22,10 +22,7 @@ export function activate(context: vscode.ExtensionContext) {
     // Register resetApiToken command
     const resetApi = vscode.commands.registerCommand("sastgemini.resetApiToken", () => resetToken(context));
     // Register scanFile command
-    const scanFileDisposable = vscode.commands.registerCommand(
-        'sastgemini.scanFile',
-        scanSASTFile
-    );
+    const scanFileDisposable = vscode.commands.registerCommand("sastgemini.scanFile", () => scanSASTFile(context));
 
 	  context.subscriptions.push(setApi, getApi, resetApi, scanFileDisposable);
 }

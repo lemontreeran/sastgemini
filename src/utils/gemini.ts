@@ -3,8 +3,9 @@ import { GoogleGenerativeAI } from "@google/generative-ai";
 import * as vscode from 'vscode';
 import {
     SAST_PROMPT,
-} from "../prompt";
-const prompt = require('./prompt.json');
+} from "./prompt";
+import prompt from './prompt.json';
+// const prompt = require('./prompt.json');
 
 export async function doSASTScan(context: vscode.ExtensionContext, text: string) {
     // const config = vscode.workspace.getConfiguration('sastgemini');
