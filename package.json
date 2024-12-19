@@ -23,22 +23,23 @@
     "commands": [
       {
         "command": "sastgemini.scanFile",
-        "title": "SAST Scan File"
+        "title": "SAST Scan File",
+        "category": "sastgemini"
       },
       {
         "command": "sastgemini.setApiToken",
         "title": "Set Api Token",
-        "category": "API"
+        "category": "sastgemini"
       },
       {
         "command": "sastgemini.getApiToken",
         "title": "Show API",
-        "category": "API"
+        "category": "sastgemini"
       },
       {
         "command": "sastgemini.resetApiToken",
         "title": "Reset Api Token",
-        "category": "API"
+        "category": "sastgemini"
       }
     ],
     "configuration": {
