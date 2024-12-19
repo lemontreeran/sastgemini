@@ -27,7 +27,7 @@ export function activate(context: vscode.ExtensionContext) {
         scanSASTFile
     );
 
-	  context.subscriptions.push(scanFileDisposable);
+	  context.subscriptions.push(setApi, getApi, resetApi, scanFileDisposable);
 }
 
 // This method is called when your extension is deactivated
